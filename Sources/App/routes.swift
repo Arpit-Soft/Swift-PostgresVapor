@@ -39,4 +39,15 @@ func routes(_ app: Application) throws {
                     .transform(to: .ok)
             }
     }
+    
+    // /movies with Reviews GET
+    app.get("movies_reviews") { req in
+        Movie.query(on: req.db).with(\.$reviews).all()
+    }
+    
+    // /reviews POST
+    app.post("reviews") { req -> EventLoopFuture<Review> in
+        let review = try req.content.decode(Review.self) // content = body of the request
+        return review.create(on: req.db).map { review }
+    }
 }

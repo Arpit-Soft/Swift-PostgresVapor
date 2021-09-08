@@ -13,11 +13,15 @@ final class Movie: Model, Content {
     
     static let schema = "movies"
     
-    @ID(key: .id)
+    @ID(key: .id) // Primary key
     var id: UUID?
     
     @Field(key: "title")
     var title: String
+    
+    // One to Many - Movie has many reviews
+    @Children(for: \.$movie)
+    var reviews: [Review]
     
     init() {}
     
