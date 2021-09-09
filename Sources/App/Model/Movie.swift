@@ -23,6 +23,10 @@ final class Movie: Model, Content {
     @Children(for: \.$movie)
     var reviews: [Review]
     
+    // Many to Many - Movie has many reviews
+    @Siblings(through: MovieActor.self, from: \.$movie, to: \.$actor)
+    var actors: [Actor]
+    
     init() {}
     
     init(id: UUID? = nil, title: String) {
